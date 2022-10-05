@@ -1,14 +1,10 @@
-import { useCallback, useState } from "react";
-import Link from "./components/Link";
+import Router, { Route } from "./components/common/Router";
+import HomePage from "./pages";
+import AboutPage from "./pages/about";
+
 import "./App.css";
 
 function App() {
-  const [location, setLocation] = useState("/");
-
-  const handleLocation = useCallback((path: string) => {
-    setLocation(path);
-  }, []);
-
   /*
     window.location.pathname 은 state가 아니어서 
     화면이 리랜더링 되지 않음. => state 로 관리?
@@ -17,24 +13,11 @@ function App() {
     
   */
 
-  if (window.location.pathname === "/about") {
-    return (
-      <div className="App">
-        <h1>about</h1>
-        <Link to="/" onClick={handleLocation}>
-          go main
-        </Link>
-      </div>
-    );
-  }
-
   return (
-    <div className="App">
-      <h1>root</h1>
-      <Link to="/about" onClick={handleLocation}>
-        about
-      </Link>
-    </div>
+    <Router>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+    </Router>
   );
 }
 
